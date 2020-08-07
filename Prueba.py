@@ -6,6 +6,7 @@ def mostrar_tabla(lista, cursor):
     nombrescolumnas = [i[0] for i in cursor.description]
     print(tabulate(lista, headers=nombrescolumnas, tablefmt='psql'))
 
+
 try:
     mydb = mysql.connector.connect(
         host="localhost",
@@ -33,11 +34,13 @@ while conexion == 'exitosa':
     if eleccion == '1':
 
         pais = str(input('Ingresa el nombre del pais que quieres consultar \n'))
-        query = "SELECT DISTINCT tp.state,tp.city,tp.population FROM tabla_poblacion tp WHERE tp.country = '{}' ".format(pais)
+        query = "SELECT DISTINCT tp.state,tp.city,tp.population FROM tabla_poblacion tp WHERE tp.country = '{}' ".format(
+            pais)
         my_cursor.execute(query)
         resultado = my_cursor.fetchall()
         if resultado:
-            print("Has escogido {}. Este pais cuenta con una poblacion distribuida de la siguiente forma: ".format(pais))
+            print(
+                "Has escogido {}. Este pais cuenta con una poblacion distribuida de la siguiente forma: ".format(pais))
             mostrar_tabla(resultado, my_cursor)
         else:
             print("No se han encontrado resultados para el pais {}. Comprueba que esta bien escrito".format(pais))
@@ -49,7 +52,8 @@ while conexion == 'exitosa':
         my_cursor.execute(query)
         resultado = my_cursor.fetchall()
         if resultado:
-            print("Has escogido {}. Este estado cuenta con una poblacion distribuida de la siguiente forma: ".format(estado))
+            print("Has escogido {}. Este estado cuenta con una poblacion distribuida de la siguiente forma: ".format(
+                estado))
             mostrar_tabla(resultado, my_cursor)
         else:
             print("No se han encontrado resultados para el estado {}. Comprueba que esta bien escrito".format(estado))
@@ -61,10 +65,12 @@ while conexion == 'exitosa':
         my_cursor.execute(query)
         resultado = my_cursor.fetchall()
         if resultado:
-            print("Has escogido {}. Esta ciudad cuenta con una poblacion distribuida de la siguiente forma: ".format(ciudad))
+            print("Has escogido {}. Esta ciudad cuenta con una poblacion distribuida de la siguiente forma: ".format(
+                ciudad))
             mostrar_tabla(resultado, my_cursor)
         else:
             print("No se han encontrado resultados para la ciudad {}. Comprueba que esta bien escrito".format(ciudad))
         break
-mydb.close()
 
+if conexion == 'Exitosa':  # Si la conexion fue exitosa, se cierra la conexion antes de terminar.
+    mydb.close()
