@@ -1,0 +1,53 @@
+DROP DATABASE PRUEBA;
+CREATE DATABASE PRUEBA;
+ USE PRUEBA;
+
+ CREATE TABLE countries (
+    ID_COUNTRY VARCHAR(30),
+    NAME VARCHAR(100)    
+);
+ 
+CREATE TABLE cities (
+	ID_CITY VARCHAR(30),
+    NAME VARCHAR(100),
+    ID_STATE VARCHAR(30),
+    POPULATION INT
+);
+
+CREATE TABLE states (
+    ID_STATE VARCHAR(30),
+    NAME VARCHAR(100),
+    ID_COUNTRY VARCHAR(30)
+);
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Data/cities.csv' 
+INTO TABLE cities 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS;
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Data/states.csv' 
+INTO TABLE states
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS;
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Data/countries.csv' 
+INTO TABLE countries
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS;
+
+
+CREATE TABLE tabla_poblacion (SELECT co.NAME AS country,
+    s.NAME AS state,
+    ci.NAME AS city,
+    ci.POPULATION AS population FROM
+    countries co
+        LEFT JOIN
+    states s ON co.ID_COUNTRY = s.ID_COUNTRY
+        LEFT JOIN
+    cities ci ON ci.ID_STATE = s.ID_STATE)
