@@ -1,4 +1,4 @@
-# consultasSQL
+# Consultas SQL
 
 Se crea una base de datos a partir de 3 archivos csv. La base de datos tiene una sola tabla en la cual estan todos los datos. Desde python se hacen consultas a esta tabla con el programa "Prueba".
 
